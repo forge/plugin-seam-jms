@@ -17,10 +17,8 @@
 */
 package org.jboss.seam.jms.descriptors.hornetq;
 
-import org.jboss.shrinkwrap.descriptor.api.Node;
-import org.jboss.shrinkwrap.descriptor.impl.base.NodeProviderImplBase;
-import org.jboss.shrinkwrap.descriptor.impl.base.XMLExporter;
-import org.jboss.shrinkwrap.descriptor.spi.DescriptorExporter;
+import org.jboss.shrinkwrap.descriptor.spi.node.Node;
+import org.jboss.shrinkwrap.descriptor.spi.node.NodeDescriptorImplBase;
 
 /**
 * HornetQJMSDescriptorImpl
@@ -29,7 +27,7 @@ import org.jboss.shrinkwrap.descriptor.spi.DescriptorExporter;
 * @author <a href="mailto:john.d.ament@gmail.com">John Ament</a>
 * @version $Revision: $
 */
-public class HornetQJMSDescriptorImpl extends NodeProviderImplBase
+public class HornetQJMSDescriptorImpl extends NodeDescriptorImplBase
 	implements HornetQJMSDescriptor
 {
    // -------------------------------------------------------------------------------------||
@@ -93,17 +91,6 @@ public class HornetQJMSDescriptorImpl extends NodeProviderImplBase
    public Node getRootNode()
    {
       return configuration;
-   }
-
-   /*
-* (non-Javadoc)
-*
-* @see org.jboss.shrinkwrap.descriptor.impl.base.NodeProviderImplBase#getExporter()
-*/
-   @Override
-   protected DescriptorExporter getExporter()
-   {
-      return new XMLExporter();
    }
 
 }

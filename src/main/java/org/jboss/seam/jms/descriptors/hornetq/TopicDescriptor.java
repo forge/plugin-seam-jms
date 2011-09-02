@@ -17,7 +17,7 @@
 */
 package org.jboss.seam.jms.descriptors.hornetq;
 
-import org.jboss.shrinkwrap.descriptor.api.Node;
+import org.jboss.shrinkwrap.descriptor.spi.node.Node;
 
 /**
 * TopicDescriptor - describes a topic in the HornetQJMS xml file.

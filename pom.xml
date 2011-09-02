@@ -19,13 +19,12 @@
             <artifactId>forge-shell-api</artifactId>
             <version>${forge.api.version}</version>
         </dependency>
-        <!--
         <dependency>
-            <groupId>org.jboss.seam.jms</groupId>
-            <artifactId>seam-jms-shrinkwrap-descriptors</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+          <groupId>org.jboss.shrinkwrap.descriptors</groupId>
+          <artifactId>shrinkwrap-descriptors-spi</artifactId>
+          <version>1.1.0-alpha-3</version>
+          <scope>compile</scope>
         </dependency>
-        -->
     </dependencies>
     <repositories>
         <repository>
@@ -47,3 +46,4 @@
         </plugins>
     </build>
 </project>
+
