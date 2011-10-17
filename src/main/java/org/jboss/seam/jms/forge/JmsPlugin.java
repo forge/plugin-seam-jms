@@ -37,6 +37,8 @@ import org.jboss.forge.shell.plugins.PipeIn;
 import org.jboss.forge.shell.plugins.PipeOut;
 import org.jboss.forge.shell.plugins.Plugin;
 import org.jboss.forge.shell.project.ProjectScoped;
+import org.jboss.forge.shell.plugins.RequiresProject;
+import org.jboss.forge.shell.plugins.SetupCommand;
 import org.jboss.seam.jms.descriptors.hornetq.HornetQJMSDescriptor;
 import org.jboss.seam.jms.descriptors.hornetq.QueueDescriptor;
 import org.jboss.seam.jms.descriptors.hornetq.TopicDescriptor;
@@ -44,7 +46,7 @@ import org.jboss.shrinkwrap.descriptor.api.DescriptorImporter;
 import org.jboss.shrinkwrap.descriptor.api.Descriptors;
 
 @Alias("jms")
-// @RequiresFacet({DependencyFacet.class, PackagingFacet.class })
+@RequiresProject
 public class JmsPlugin implements Plugin
 {
 
@@ -75,7 +77,7 @@ public class JmsPlugin implements Plugin
       pipeOut.println(ShellColor.BLUE, "Use the hornetq-queue command to create or edit hornetq queues.");
    }
 
-   @Command("install")
+   @SetupCommand
    public void installCommand(PipeOut pipeOut)
    {
       DependencyFacet deps = project.getFacet(DependencyFacet.class);
