@@ -13,11 +13,14 @@ import org.jboss.forge.parser.JavaParser;
 import org.jboss.forge.parser.java.JavaInterface;
 import org.jboss.forge.parser.java.SyntaxError;
 import org.jboss.forge.parser.java.util.Strings;
+import org.jboss.forge.parser.xml.Node;
+import org.jboss.forge.parser.xml.XMLParser;
 import org.jboss.forge.project.Project;
 import org.jboss.forge.project.dependencies.Dependency;
 import org.jboss.forge.project.dependencies.DependencyBuilder;
 import org.jboss.forge.project.facets.DependencyFacet;
 import org.jboss.forge.project.facets.JavaSourceFacet;
+import org.jboss.forge.project.facets.ResourceFacet;
 import org.jboss.forge.project.facets.WebResourceFacet;
 import org.jboss.forge.resources.DirectoryResource;
 import org.jboss.forge.resources.FileResource;
@@ -89,6 +92,32 @@ public class JmsPlugin implements Plugin
       DependencyBuilder dep = DependencyBuilder.create(depString);
       deps.addDependency(dep);
    }
+
+
+    @Command("configure-connectionfactory")
+    public void configureConnectionFactory(@Option(name = "name", required = true) String connectionFactoryName)
+    {
+        ResourceFacet resourceFacet = project.getFacet(ResourceFacet.class);
+        FileResource<?> seambeans = resourceFacet.getResource("META-INF/seam-beans.xml");
+
+        Node xml;
+        if(seambeans.exists()) {
+            xml = XMLParser.parse(seambeans.getResourceInputStream()).getRoot();
+        } else {
+            xml = XMLParser.parse("<beans xmlns=\"http://java.sun.com/xml/ns/javaee\"\n" +
+                    "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
+                    "    xmlns:s=\"urn:java:ee\"\n" +
+                    "    xmlns:jmsi=\"urn:java:org.jboss.seam.jms.inject\"\n" +
+                    "    xsi:schemaLocation=\"http://java.sun.com/xml/ns/javaee http://docs.jboss.org/cdi/beans_1_0.xsd\"></beans>");
+        }
+
+        Node producerNode = xml.createChild("jmsi:JmsConnectionFactoryProducer");
+        producerNode.createChild("s:modifies");
+        producerNode.createChild("jmsi:connectionFactoryJNDILocation").text(connectionFactoryName);
+
+        seambeans.createNewFile();
+        seambeans.setContents(XMLParser.toXMLInputStream(xml));
+    }
 
    @Command("hornetq-queue")
    public void createQueueDescriptor(
