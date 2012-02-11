@@ -1,14 +1,5 @@
 package org.jboss.seam.jms.forge;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.enterprise.event.Event;
-import javax.inject.Inject;
-
 import org.jboss.forge.parser.JavaParser;
 import org.jboss.forge.parser.java.JavaInterface;
 import org.jboss.forge.parser.java.SyntaxError;
@@ -25,28 +16,23 @@ import org.jboss.forge.project.facets.WebResourceFacet;
 import org.jboss.forge.resources.DirectoryResource;
 import org.jboss.forge.resources.FileResource;
 import org.jboss.forge.resources.java.JavaResource;
-import org.jboss.forge.shell.PromptType;
-import org.jboss.forge.shell.Shell;
-import org.jboss.forge.shell.ShellColor;
-import org.jboss.forge.shell.ShellPrintWriter;
-import org.jboss.forge.shell.ShellPrompt;
+import org.jboss.forge.shell.*;
 import org.jboss.forge.shell.events.PickupResource;
-import org.jboss.forge.shell.plugins.Alias;
-import org.jboss.forge.shell.plugins.Command;
-import org.jboss.forge.shell.plugins.Current;
-import org.jboss.forge.shell.plugins.DefaultCommand;
-import org.jboss.forge.shell.plugins.Option;
-import org.jboss.forge.shell.plugins.PipeIn;
-import org.jboss.forge.shell.plugins.PipeOut;
-import org.jboss.forge.shell.plugins.Plugin;
+import org.jboss.forge.shell.plugins.*;
 import org.jboss.forge.shell.project.ProjectScoped;
-import org.jboss.forge.shell.plugins.RequiresProject;
-import org.jboss.forge.shell.plugins.SetupCommand;
 import org.jboss.seam.jms.descriptors.hornetq.HornetQJMSDescriptor;
 import org.jboss.seam.jms.descriptors.hornetq.QueueDescriptor;
 import org.jboss.seam.jms.descriptors.hornetq.TopicDescriptor;
 import org.jboss.shrinkwrap.descriptor.api.DescriptorImporter;
 import org.jboss.shrinkwrap.descriptor.api.Descriptors;
+
+import javax.enterprise.event.Event;
+import javax.inject.Inject;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
 
 @Alias("jms")
 @RequiresProject
@@ -90,7 +76,7 @@ public class JmsPlugin implements Plugin
       deps.setProperty("seam.jms.version", version.getVersion());
       String depString = String.format("%s:%s:${seam.jms.version}", JMS_GROUP_ID, JMS_ARTIFACT_ID);
       DependencyBuilder dep = DependencyBuilder.create(depString);
-      deps.addDependency(dep);
+      deps.addDirectDependency(dep);
    }
 
 
