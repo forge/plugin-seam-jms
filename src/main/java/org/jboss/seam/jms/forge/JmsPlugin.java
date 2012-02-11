@@ -34,7 +34,7 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
-@Alias("jms")
+@Alias("seam-jms")
 @RequiresProject
 public class JmsPlugin implements Plugin
 {
